@@ -1,0 +1,22 @@
+{
+  "name": "poc_pubsub_redis",
+  "version": "1.0.0",
+  "main": "main.mjs",
+  "repository": "https://github.com/ralvescosta/poc_pubsub_redis.git",
+  "author": "ralvescosta <rafael.rac.mg@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start:dev": "node src/main.mjs --inspect"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "pino": "^6.13.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.10",
+    "eslint": "^7.32.0",
+    "pino-inspector": "^0.1.0",
+    "pino-pretty": "^6.0.0"
+  }
+}
