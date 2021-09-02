@@ -1,7 +1,11 @@
 const redis = require('redis')
 
-module.exports = ({ logger }) => ({
-  connection: () => {
+class RedisClient {
+  constructor (logger) {
+    this._logger = logger
+  }
+
+  connection () {
     const redisConnection = redis.createClient({
       password: process.env.REDIS_PASS,
       db: process.env.REDIS_DB,
@@ -9,10 +13,12 @@ module.exports = ({ logger }) => ({
       port: process.env.REDIS_PORT
     })
 
-    redisConnection.on('error', function (error) {
-      logger.error('[REDIS] - ' + error)
+    redisConnection.on('error', (error) => {
+      this._logger.error('[REDIS] - ' + error)
     })
 
     return redisConnection
   }
-})
+}
+
+module.exports = { RedisClient }

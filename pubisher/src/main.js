@@ -1,14 +1,15 @@
 require('dotenv').config({ path: '.env' })
 
-const HttpServer = require('./httpServer/sever')
 const { logger } = require('./logger/logger')
-const Redis = require('./redis/connection')
-const PubSubClient = require('./pubsub/pubsubClient')
-const PubController = require('./controller/pubController')
+const { HttpServer } = require('./httpServer/sever')
+const { RedisClient } = require('./redis/redisClient')
+const { PubSubClient } = require('./pubsub/pubsubClient')
+const { HttpController } = require('./controller/httpController')
+const { SubController } = require('./controller/subController')
 const Routes = require('./routes')
 
 const createRedisConnection = () => {
-  const redis = Redis({ logger })
+  const redis = new RedisClient(logger)
   let redisConnection
   try {
     redisConnection = redis.connection()
@@ -25,16 +26,18 @@ const createRedisConnection = () => {
 }
 
 ;(() => {
-  const httpServer = HttpServer({ logger })
+  const httpServer = new HttpServer(logger)
   httpServer.setup()
 
   const redisConnection = createRedisConnection()
 
-  const pubSubClient = PubSubClient({ redisConnection, logger })
-  const pubController = PubController({ pubSubClient, logger })
+  const subController = new SubController(logger)
+  const pubSubClient = new PubSubClient(redisConnection, subController, logger)
+  const httpController = new HttpController(pubSubClient, logger)
 
-  const routes = Routes({ httpServer, controller: pubController, logger })
+  const routes = Routes({ httpServer, controller: httpController })
   routes.register()
+  pubSubClient.onMessage()
 
   httpServer.run()
 })()
