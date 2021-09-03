@@ -19,12 +19,14 @@ class PubSubClient {
   onMessage () {
     this._redisConnection.on('message', (channel, message) => {
       this._logger.info(`[PubSubClient] - Received message in a channel: ${channel}`)
+
       const request = this._reqBuffer.find(item => item.id === channel)
       if (request) {
         this._logger.info('[PubSubClient] - Clear TimeOut')
         clearTimeout(request.timeOutStrategy)
         this._subController.exec(message, request.res)
         this._reqBuffer = this._reqBuffer.filter(item => item.id !== channel)
+        this._redisConnection.unsubscribe(channel)
       }
     })
   }
