@@ -6,7 +6,7 @@
   "author": "ralvescosta <rafael.rac.mg@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon --exec 'node --inspect=0.0.0.0:9230 src/main.js' | pino-pretty -c"
+    "publisher": "nodemon --exec 'node --inspect=0.0.0.0:9230 src/main.js' | pino-pretty -c"
   },
   "dependencies": {
     "cors": "^2.8.5",

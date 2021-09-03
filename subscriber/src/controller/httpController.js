@@ -13,6 +13,7 @@ class HttpController {
       logger.info(`[HttpController] - Time Out - Channel: ${channel}`)
       pubSubClient.unsubscribe(channel)
       res.status(503).json({ error: 'Time out' })
+      pubSubClient.removeRequest(channel)
     }, 60000, res, body.requestId, this._pubSubClient, this._logger)
 
     this._pubSubClient.pushRequestBuffer({ id: body.requestId, res, timeOutStrategy })

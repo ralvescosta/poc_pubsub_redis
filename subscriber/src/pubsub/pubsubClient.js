@@ -33,6 +33,11 @@ class PubSubClient {
     this._logger.info(`[PubSubClient] - Register request: ${request.id}`)
     this._reqBuffer.push(request)
   }
+
+  removeRequest (id) {
+    this._logger.info(`[PubSubClient] - Remove request: ${id}`)
+    this._reqBuffer = this._reqBuffer.filter(item => item.id !== id)
+  }
 }
 
 module.exports = { PubSubClient }
