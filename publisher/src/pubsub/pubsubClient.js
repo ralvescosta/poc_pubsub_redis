@@ -6,7 +6,7 @@ class PubSubClient {
 
   pub (channel, msg) {
     this._logger.info(`[PubSubClient] - Publishing in a channel: ${channel}`)
-    this._redisConnection.publisher(channel, msg)
+    this._redisConnection.publish(channel, JSON.stringify(msg))
   }
 }
 

@@ -6,7 +6,7 @@
   "author": "ralvescosta <rafael.rac.mg@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "node src/main.js --inspect"
+    "start:dev": "nodemon --exec 'node --inspect=0.0.0.0:9230 src/main.js' | pino-pretty -c"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -29,6 +29,7 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
+    "nodemon": "^2.0.12",
     "pino-inspector": "^0.1.0",
     "pino-pretty": "^6.0.0"
   }

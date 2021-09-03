@@ -13,10 +13,6 @@ const createRedisConnection = () => {
   let redisConnection
   try {
     redisConnection = redis.connection()
-    if (!redisConnection.ping()) {
-      logger.error('[REDIS] - Connection Error')
-      process.exit(1)
-    }
   } catch (err) {
     logger.error('[REDIS] - ' + err)
     process.exit(1)
