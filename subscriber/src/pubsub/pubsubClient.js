@@ -24,12 +24,13 @@ class PubSubClient {
         this._logger.info('[PubSubClient] - Clear TimeOut')
         clearTimeout(request.timeOutStrategy)
         this._subController.exec(message, request.res)
+        this._reqBuffer = this._reqBuffer.filter(item => item.id !== channel)
       }
     })
   }
 
   pushRequestBuffer (request) {
-    this._logger.info(`[PubSubClient] - Register request: ${request.requestId}`)
+    this._logger.info(`[PubSubClient] - Register request: ${request.id}`)
     this._reqBuffer.push(request)
   }
 }

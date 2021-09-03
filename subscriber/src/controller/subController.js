@@ -4,8 +4,8 @@ class SubController {
   }
 
   exec (message, res) {
-    this._logger.info(`[SubController] - ${JSON.stringify(message)}`)
-    res.status(200).json({})
+    this._logger.info(`[SubController] - ${message}`)
+    return res.status(200).json({})
   }
 }
 
