@@ -9,10 +9,11 @@ class HttpController {
 
     this._pubSubClient.registerChannel(body.requestId)
 
-    const timeOutStrategy = setTimeout((res, channel, pubSubClient) => {
+    const timeOutStrategy = setTimeout((res, channel, pubSubClient, logger) => {
+      logger.info(`[HttpController] - Time Out - Channel: ${channel}`)
       pubSubClient.unsubscribe(channel)
       res.status(503).json({ error: 'Time out' })
-    }, 60000, res, body.requestId, this._pubSubClient)
+    }, 60000, res, body.requestId, this._pubSubClient, this._logger)
 
     this._pubSubClient.pushRequestBuffer({ id: body.requestId, res, timeOutStrategy })
   }
